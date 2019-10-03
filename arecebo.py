@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+from typing import List
+
+"""Adhoc notebook for decyphering mx.com/u15 coding puzzle"""
+
+__author__ = "Matt Hoiland"
+__license__ = "GPL-3.0"
+__email__ = "matthew.proctor.hoiland@gmail.com"
+__status__ = "Prototype"
+__date__ = "2019-10-03"
+
+
+def factor(n: int) -> List[int]:
+    """Factor n very naively.
+
+    Brute force algorithm, does not include 1 and n"""
+    return [i for i in range(2, n) if n % i == 0]
+
+
+def split_by_n(s: str, n: int) -> List[str]:
+    """Split string s into an array of strings of length n."""
+    return [s[i:i+n] for i in range(0, len(s), n)]
+
+
+message = "00000000000000000000000000000000000000000000000000000000000000000" \
+          "00000000000000000000000000000000000000000000000000000000000000000" \
+          "00000001000000000000000000000000000001101000010001000000000000111" \
+          "10000111100011010000000010000111100011111000100001000001010100001" \
+          "01000000000000100000001000010010101000000100001000000010000100100" \
+          "00100000101010000010000000000000100000001000010010101000001000001" \
+          "00000001000010010000100000101010000101000001100000100000001000010" \
+          "01010100001000000100000001000010010001100000100010001000100001100" \
+          "00001111000011110001000100010000000011110001111100001110100000000" \
+          "00000000000000000000000000000000000000000000000000000000000001000" \
+          "00000000000000000000000000000000000000000000000000000000000000000" \
+          "00000000000000000000000000000000000000000000000000000000000000000" \
+          "00000000000000000000000000000000000000000000000000000000000000000" \
+          "00000000000000000000000000000000000000000000000000000000000000000" \
+          "000"
+
+message_length = len(message)
+factors = factor(message_length)
+
+print("message length:", message_length)  # 913
+print("factors:", factors)  # [11. 83]
+
+for f in factors:
+    segments = split_by_n(message, f)
+    for segment in segments:
+        print(segment.replace('0', ' ').replace('1', '█'))

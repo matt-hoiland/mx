@@ -125,10 +125,10 @@ function assemble(doc: string): string {
     // Build label map
     const labelmap = buildLabelMap(sections.code);
 
+    work = sections.code;
     // Strip labels
     work = stripLabels(work);
 
-    work = sections.code;
     // Substitute symbols
     work = substitute(work, symmap);
     // Substitute labels
@@ -136,7 +136,7 @@ function assemble(doc: string): string {
     // Substitute instructions
     work = substitute(work, instrumap);
 
-    return work;
+    return work.toUpperCase().replace(/[\s\n]+/g, ' ');
   }
 
   return "I'm not executable";
@@ -195,7 +195,13 @@ function stripComments(doc: string): string {
  * @returns a new code section without label markers and leading whitespace
  */
 function stripLabels(code: string): string {
-  return code;
+  const result = code
+    .split('\n')
+    .map(line => line.replace(/[A-Z_]+:/, '').trim())
+    .join('\n');
+
+  console.log(result);
+  return result;
 }
 
 /**

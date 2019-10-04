@@ -159,7 +159,6 @@ function assemble(doc: string): string {
  */
 function isValid(doc: string): boolean {
   const sections = doc.split(/ *---+ */);
-  console.log(sections);
   return (
     sections.length === 3 &&
     sections[1]
@@ -209,7 +208,12 @@ function stripLabels(code: string): string {
 function splitSections(
   doc: string
 ): { desc: string; syms: string; code: string } {
-  throw Error('Not Implemented');
+  const sections = doc.split(/ *---+ */);
+  return {
+    desc: sections[0].trim(),
+    syms: sections[1].trim(),
+    code: sections[2].trim(),
+  }
 }
 
 /**

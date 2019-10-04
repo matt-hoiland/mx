@@ -1,0 +1,20 @@
+Exercise 1
+
+The program will start with two numbers whose sum is less than 255 in memory
+slots 0x0E (second to last) & 0x0F (last). Compute the sum of the two numbers
+and store it in memory slot 0x00.
+
+---
+
+A 0e
+B 0f
+RETURN 00
+
+---
+
+START:      accv 00                 # Reset accumulator
+            rtoa A                  # Copy first param to accumulator
+            accr B                  # Add second param to accumulator
+            ator RETURN             # Copy accumulator to return register
+
+END:        halt

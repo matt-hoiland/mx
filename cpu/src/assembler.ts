@@ -225,7 +225,18 @@ function splitSections(
  *   byte representation
  */
 function buildSymMap(syms: string): Record<string, string> {
-  return {};
+  return syms
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0)
+    .map(line => line.split(/ +/))
+    .reduce(
+      (acc: Record<string, string>, pair) => {
+        acc[pair[0]] = pair[1];
+        return acc;
+      },
+      {}
+    );
 }
 
 /**

@@ -125,6 +125,9 @@ function assemble(doc: string): string {
     // Build label map
     const labelmap = buildLabelMap(sections.code);
 
+    // Strip labels
+    work = stripLabels(work);
+
     work = sections.code;
     // Substitute symbols
     work = substitute(work, symmap);
@@ -132,9 +135,6 @@ function assemble(doc: string): string {
     work = substitute(work, labelmap);
     // Substitute instructions
     work = substitute(work, instrumap);
-
-    // Strip labels
-    work = stripLabels(work);
 
     return work;
   }
@@ -276,7 +276,11 @@ function buildLabelMap(code: string): Record<string, string> {
  * @returns a new code section string
  */
 function substitute(code: string, map: Record<string, string>): string {
-  return code;
+  let work = code;
+  for (const key of Object.keys(map)) {
+    work = work.replace(new RegExp(`\\b${key}\\b`, 'g'), map[key]);
+  }
+  return work;
 }
 
 if (require.main === module) {

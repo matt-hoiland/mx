@@ -1,7 +1,18 @@
-Description section
+Initial example program, dissassembled
 
 ---
-SYM 00 # Basic symbol
+N 00
 
 ---
-START: halt # Super simple program
+START:  res             # Reset the counter
+        vtoa 00         # Set accumulator to value
+        ator N          # Store accumulator in first memory slot (0x00)
+
+LOOP:   inc             # Loop begin.  Increment counter, should now be 1
+        ctoa            # Transfer counter to accumulator
+        jumpv 0b END    # Check if accumulator is equal to 11, if so, jump to end of loop
+        accr N          # Add accumulator with value in first memory slot (0x00)
+        ator N          # Store accumulator back into first memory slot (0x00)
+        setpc LOOP      # Jump to top of loop
+
+END:    halt            # Halt program

@@ -185,7 +185,7 @@ function isValid(doc: string): boolean {
  * @returns the same document with no comments or trailing line whitespace
  */
 function stripComments(doc: string): string {
-  return doc;
+  return doc.replace(/#.*$/gm, '');
 }
 
 /**

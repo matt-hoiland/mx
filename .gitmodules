@@ -1,0 +1,3 @@
+[submodule "mxcpu"]
+	path = mxcpu
+	url = git@github.com:mxenabled/mxcpu.git

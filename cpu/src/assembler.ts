@@ -135,6 +135,8 @@ function assemble(doc: string): string {
 
     // Strip labels
     work = stripLabels(work);
+
+    return work;
   }
 
   return "I'm not executable";
@@ -156,7 +158,23 @@ function assemble(doc: string): string {
  * @returns `true` if all the above are satisfied, `false` otherwise
  */
 function isValid(doc: string): boolean {
-  return false;
+  const sections = doc.split(/ *---+ */);
+  console.log(sections);
+  return (
+    sections.length === 3 &&
+    sections[1]
+      .split('\n')
+      .map(line => line.match(/^(\s*[A-Z_]+ +0[0-9a-f]\s*)?\s*(#.*)?$/))
+      .reduce((a: boolean, b) => a && b !== null, true) &&
+    sections[2]
+      .split('\n')
+      .map(line =>
+        line.match(
+          /^(\s*([A-Z_]+:)?\s*[a-z]+( +([A-Z_]+|[0-9a-f]+)){0,2}\s*)?\s*(#.*)?$/
+        )
+      )
+      .reduce((a: boolean, b) => a && b !== null, true)
+  );
 }
 
 /**

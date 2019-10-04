@@ -1,0 +1,32 @@
+{
+  "name": "cpu",
+  "version": "1.0.0",
+  "description": "Workbook for mx.com/cpu",
+  "main": "assembler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/matt-hoiland/mx.git"
+  },
+  "author": "Matt Hoiland",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/matt-hoiland/mx/issues"
+  },
+  "homepage": "https://github.com/matt-hoiland/mx#readme",
+  "devDependencies": {
+    "@types/node": "^10.0.3",
+    "ts-node": "^8.4.1",
+    "typescript": "~3.5.0",
+    "gts": "^1.1.0"
+  }
+}

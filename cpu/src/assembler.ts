@@ -248,7 +248,23 @@ function buildSymMap(syms: string): Record<string, string> {
  *   byte representation
  */
 function buildLabelMap(code: string): Record<string, string> {
-  return {};
+  const map: Record<string, string> = {};
+
+  const words = code.split(/\s+/);
+  let bytes = 0;
+  for (const word of words) {
+    if (bytes === 256) {
+      throw Error('Maximum program length exceeded')
+    }
+    const label = word.match(/([A-Z_]+):/);
+    if (label) {
+      map[label[1]] = bytes.toString(16).padStart(2, '0');
+    } else {
+      bytes++;
+    }
+  }
+
+  return map;
 }
 
 /**

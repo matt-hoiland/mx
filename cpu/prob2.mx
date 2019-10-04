@@ -1,0 +1,44 @@
+Exercise 2
+
+Compute the nth value of the Fibonacci sequence (e.g. n=0, Fib(0) = 0 ... n=7,
+Fib(7) = 13). When the program starts, the number n will be in the last memory
+slot. Compute the Fibonacci value that corresponds to n and store it in memory
+slot 0x00.
+
+---
+
+N 0f
+A 00
+B 01
+SUM 02
+RETURN 00
+
+---
+            # Setup (i = 0, a = 0, b = 1)
+START:      res                     # Reset counter
+            vtoa 00                 # Clear accumulator
+            ator A                  # Set A = 0
+            accv 01                 # Set accumulator = 1
+            ator B                  # Set B = 1
+
+LOOP:       ctoa                    # Copy i to accumulator for test
+            jumpr N END             # If accumulator == N, break
+            vtoa 00                 # Clear accumulator
+
+            # sum = a + b
+            accr A                  # acc += a
+            accr B                  # acc += b
+            ator SUM                # sum = acc
+
+            # a = b
+            rtoa B                  # acc = b
+            ator A                  # a = acc
+
+            # b = sum
+            rtoa SUM
+            ator B
+
+            inc                     # i++
+            setpc LOOP              # otherwise continue
+
+END:        halt

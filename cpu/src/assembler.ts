@@ -195,13 +195,10 @@ function stripComments(doc: string): string {
  * @returns a new code section without label markers and leading whitespace
  */
 function stripLabels(code: string): string {
-  const result = code
+  return code
     .split('\n')
     .map(line => line.replace(/[A-Z_]+:/, '').trim())
     .join('\n');
-
-  console.log(result);
-  return result;
 }
 
 /**

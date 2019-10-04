@@ -12,8 +12,8 @@ RETURN 00
 
 ---
 
-START:      accv 00                 # Reset accumulator
-            rtoa A                  # Copy first param to accumulator
+START:      vtoa 00                 # Reset accumulator
+            accr A                  # Add first param to accumulator
             accr B                  # Add second param to accumulator
             ator RETURN             # Copy accumulator to return register
 

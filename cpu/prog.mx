@@ -1,0 +1,7 @@
+Description section
+
+---
+SYM 00 # Basic symbol
+
+---
+START: halt # Super simple program

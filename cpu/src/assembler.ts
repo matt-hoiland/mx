@@ -1,8 +1,24 @@
 #!/usr/bin/env ts-node
 
+/**
+ * A first draft assembler for MX's CPU coding challenge.
+ *
+ * It was completely unnecessary to write, but so wonderfully fun, and the it
+ * allowed me to present my solutions in such a beautiful way.
+ *
+ * @author Matt Hoiland
+ * @date 2019-10-03
+ * @license GPL-3.0
+ * @email matthew.proctor.hoiland@gmail.com
+ */
+
+/** Imports */
 import * as fs from 'fs';
 import * as process from 'process';
 
+/**
+ * Handle cli validation and file IO
+ */
 function main(argv: string[]): number {
   if (argv.length !== 3) {
     console.error('Usage: ts-node assembler.ts file.mx');
@@ -24,6 +40,9 @@ function main(argv: string[]): number {
   return 0;
 }
 
+/**
+ * Instruction Set from mx.com/cpu with my own names
+ */
 const instructionSet: Record<
   string,
   { byte: string; op1?: string; op2?: string; desc: string }
@@ -98,6 +117,9 @@ const instructionSet: Record<
   },
 };
 
+/**
+ * Mapping for op-code keywords compatible with [[substitute]]
+ */
 const instrumap: Record<string, string> = Object.keys(instructionSet).reduce(
   (acc: Record<string, string>, key) => {
     acc[key] = instructionSet[key].byte;
@@ -216,7 +238,7 @@ function splitSections(
     desc: sections[0].trim(),
     syms: sections[1].trim(),
     code: sections[2].trim(),
-  }
+  };
 }
 
 /**
@@ -233,13 +255,10 @@ function buildSymMap(syms: string): Record<string, string> {
     .map(line => line.trim())
     .filter(line => line.length > 0)
     .map(line => line.split(/ +/))
-    .reduce(
-      (acc: Record<string, string>, pair) => {
-        acc[pair[0]] = pair[1];
-        return acc;
-      },
-      {}
-    );
+    .reduce((acc: Record<string, string>, pair) => {
+      acc[pair[0]] = pair[1];
+      return acc;
+    }, {});
 }
 
 /**
@@ -257,7 +276,7 @@ function buildLabelMap(code: string): Record<string, string> {
   let bytes = 0;
   for (const word of words) {
     if (bytes === 256) {
-      throw Error('Maximum program length exceeded')
+      throw Error('Maximum program length exceeded');
     }
     const label = word.match(/([A-Z_]+):/);
     if (label) {
